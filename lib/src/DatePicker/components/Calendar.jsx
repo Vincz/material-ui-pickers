@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 import keycode from 'keycode';
 import withStyles from '@material-ui/core/styles/withStyles';
 import EventListener from 'react-event-listener';
-import throttle from 'lodash.throttle';
 
 import { findClosestEnabledDate } from '../../_helpers/date-utils';
 import CalendarHeader from './CalendarHeader';
@@ -60,6 +59,7 @@ export class Calendar extends Component {
     return null;
   }
 
+
   componentDidMount() {
     const {
       date, minDate, maxDate, utils, disableFuture, disablePast,
@@ -87,14 +87,13 @@ export class Calendar extends Component {
     this.setState({ currentMonth: newMonth, slideDirection });
   };
 
-  throttledHandleChangeMonth = throttle(this.handleChangeMonth, 350)
 
   validateMinMaxDate = (day) => {
     const { minDate, maxDate, utils } = this.props;
 
     return (
-      (minDate && utils.isBeforeDay(day, utils.date(minDate))) ||
-      (maxDate && utils.isAfterDay(day, utils.date(maxDate)))
+      (minDate && utils.isBeforeDay(day, utils.date(minDate)))
+      || (maxDate && utils.isAfterDay(day, utils.date(maxDate)))
     );
   };
 
@@ -126,10 +125,10 @@ export class Calendar extends Component {
     } = this.props;
 
     return (
-      (disableFuture && utils.isAfterDay(day, utils.date())) ||
-      (disablePast && utils.isBeforeDay(day, utils.date())) ||
-      this.validateMinMaxDate(day) ||
-      shouldDisableDate(day)
+      (disableFuture && utils.isAfterDay(day, utils.date()))
+      || (disablePast && utils.isBeforeDay(day, utils.date()))
+      || this.validateMinMaxDate(day)
+      || shouldDisableDate(day)
     );
   };
 
@@ -229,15 +228,14 @@ export class Calendar extends Component {
 
     return (
       <Fragment>
-        {
-          allowKeyboardControl &&
-          <EventListener target="window" onKeyDown={this.handleKeyDown} />
+        { allowKeyboardControl
+          && <EventListener target="window" onKeyDown={this.handleKeyDown} />
         }
 
         <CalendarHeader
           slideDirection={slideDirection}
           currentMonth={currentMonth}
-          onMonthChange={this.throttledHandleChangeMonth}
+          onMonthChange={this.handleChangeMonth}
           leftArrowIcon={this.props.leftArrowIcon}
           rightArrowIcon={this.props.rightArrowIcon}
           disablePrevMonth={this.shouldDisablePrevMonth()}
