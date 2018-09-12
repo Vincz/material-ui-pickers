@@ -72,6 +72,7 @@ export class DatePicker extends PureComponent {
   }
 
   render() {
+    const { showYearSelection } = this.state;
     const {
       disablePast,
       disableFuture,
@@ -84,7 +85,7 @@ export class DatePicker extends PureComponent {
       shouldDisableDate,
       allowKeyboardControl,
     } = this.props;
-    const { showYearSelection } = this.state;
+
 
     return (
       <Fragment>

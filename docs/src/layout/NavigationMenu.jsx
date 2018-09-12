@@ -27,6 +27,7 @@ const navItems = [
       { title: 'Date Picker', href: '/demo/datepicker' },
       { title: 'Time Picker', href: '/demo/timepicker' },
       { title: 'Date & Time Picker', href: '/demo/datetimepicker' },
+      { title: 'Date range picker', href: '/demo/daterangepicker' },
     ],
   },
   {
